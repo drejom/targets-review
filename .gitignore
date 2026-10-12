@@ -1,0 +1,9 @@
+.DS_Store
+*.swp
+*.swo
+.Rproj.user/
+.Rhistory
+.RData
+
+# Claude Code session state (not repo content)
+/.claude/

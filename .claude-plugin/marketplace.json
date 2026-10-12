@@ -1,0 +1,17 @@
+{
+  "name": "targets-review",
+  "owner": {
+    "name": "Denis O'Meally"
+  },
+  "metadata": {
+    "description": "Portable review philosophy and R {targets}/Quarto pipeline standards, packaged as a Claude Code plugin.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "targets-review",
+      "description": "Review ratchet philosophy, ADR practice, R {targets}/Quarto pipeline conventions, and a multi-agent scientific review skill.",
+      "source": "./"
+    }
+  ]
+}

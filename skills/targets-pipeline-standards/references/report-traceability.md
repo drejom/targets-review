@@ -1,0 +1,66 @@
+<!--
+Editorial note: this file is derived from a user-supplied prompt whose source text repeated
+the "cosmo theme / downloadthis / independently-renderable book" sentence four times
+verbatim, apparently as a recurring reminder rather than four distinct instructions. It is
+stated once below rather than four times. Nothing else in the source content was altered —
+flagging the collapse here per this project's own "don't silently 'fix' content without
+saying so" convention.
+-->
+
+# Report traceability: every number in the report must be derivable, not typed
+
+All substantial computation — statistical summaries, tables, and plot generation — belongs
+in the `{targets}` pipeline, not in the report document. The report should be independently
+renderable from exported artifacts, without requiring a fresh analysis run. If your report
+is a Quarto book: use the "cosmo" theme by default, and use `downloadthis` (or an equivalent)
+when artifact download needs to be offered to the reader.
+
+## The rule
+
+Every number, table, and figure cited in a report's narrative must trace back to a
+`{targets}` target — never hand-typed, never computed inline in the report document from raw
+data.
+
+## The mechanism
+
+Use a single values-object-building target (conventionally named something like
+`build_reported_values()`, materialized as a target called `reported_values`) that returns
+one named list — **the single source of truth for every inline narrative number.** Validate
+it with a guard function that hard-stops the pipeline build if any value is `NULL`, empty,
+`NA`, or non-finite. A blank or `"NULL"` string reaching a published report is a **build
+failure**, not a rendering detail to patch around afterward.
+
+Every report document reads this list via a plain, literal `tar_read(reported_values)` call
+— see `qmd-conventions.md` §2 for the full authoring convention.
+
+## Why `tar_read_raw()` (or any dynamic/string-based read) is banned for anything a report depends on
+
+`{targets}` builds its dependency graph via **static code analysis** — it scans source for
+literal symbol references like `tar_read(some_name)`. A string-based or dynamic read (e.g.
+`tar_read_raw(variable_holding_a_name)`) is invisible to that scan. This means:
+
+- the report silently **stops tracking what it actually depends on**;
+- the pipeline's dependency graph no longer reflects reality;
+- the report can render **stale numbers without any error**, because `{targets}` has no way
+  to know it needs to invalidate and re-render.
+
+Target references in a report must be literal symbols, full stop — see
+`targets-semantics.md` §1 and §3 for the primary-source basis of this rule.
+
+## Figures as file targets, re-keyed after reading
+
+Build figures as separate `format = "file"` targets (see `targets-semantics.md` §4 for the
+format's full semantics). Because file targets **don't preserve list/vector names** after
+`tar_read()`, re-key them — e.g. by `basename()` of the file path — immediately after
+reading, rather than relying on name-preservation you haven't actually verified for your
+`{targets}` version.
+
+## Related
+
+- `qmd-conventions.md` — the full report-authoring convention this rule feeds into.
+- `adr-practice/templates/principle-ssot.md` — this rule is the `{targets}`-specific
+  instance of "every fact has exactly one home": the values-object target *is* the one home
+  for every number a report cites.
+- `adr-practice/templates/principle-claim-decay.md` — a claim in the report decays exactly
+  like any other claim; deriving it (this mechanism) is the strongest of the three defenses
+  that template describes, which is exactly why this rule is mandatory rather than advisory.

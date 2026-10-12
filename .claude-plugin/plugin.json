@@ -1,0 +1,18 @@
+{
+  "name": "targets-review",
+  "version": "0.1.0",
+  "description": "Portable review philosophy, ADR practice, and R {targets}/Quarto pipeline conventions, plus a multi-agent scientific review skill, for any targets-based analysis project.",
+  "author": {
+    "name": "Denis O'Meally"
+  },
+  "skills": [
+    "skills/review-ratchet",
+    "skills/targets-pipeline-standards",
+    "skills/adr-practice",
+    "skills/scientific-review"
+  ],
+  "commands": [
+    "commands/targets-review-init.md",
+    "commands/scientific-review.md"
+  ]
+}
