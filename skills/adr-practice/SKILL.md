@@ -43,16 +43,13 @@ checklist and leave a single pointer in their place.
 | `templates/principle-environment.md` | The environment that tests is not the environment that runs — name the environment when reporting a pass |
 | `templates/principle-evidence-quality.md` | Count sources, not checks; a failing control invalidates the method |
 
-Each principle template is genericized from real, independently-converged-on incidents
-across more than one project, with the project-specific details (issue numbers, internal
-identifiers) stripped and replaced with one tight anonymized example. Copy one into a
-project's `.claude/adr/` directory and adapt the worked example to the project's own
-incident when one arises — don't just cite the template verbatim forever; a project-specific
-incident is what makes the rule land.
+Each template states the rule generally, with one worked example. Copy one into a project's
+`.claude/adr/` directory and **replace the worked example with the project's own incident**
+once one arises — don't cite the generic example verbatim forever; a project-specific
+incident is what makes the rule land for that project's own reviewers.
 
-These six cover the principles that recurred across more than one source project. They are
-a starting library, not an exhaustive one — a project will accumulate its own domain-specific
-ADRs over time (see "What doesn't belong here" below).
+This is a starting library, not an exhaustive one — a project will accumulate its own
+domain-specific ADRs over time (see "What doesn't belong here" below).
 
 ## Graduating a rule into a mechanical gate
 

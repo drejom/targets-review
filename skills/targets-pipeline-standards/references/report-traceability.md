@@ -1,12 +1,3 @@
-<!--
-Editorial note: this file is derived from a user-supplied prompt whose source text repeated
-the "cosmo theme / downloadthis / independently-renderable book" sentence four times
-verbatim, apparently as a recurring reminder rather than four distinct instructions. It is
-stated once below rather than four times. Nothing else in the source content was altered —
-flagging the collapse here per this project's own "don't silently 'fix' content without
-saying so" convention.
--->
-
 # Report traceability: every number in the report must be derivable, not typed
 
 All substantial computation — statistical summaries, tables, and plot generation — belongs

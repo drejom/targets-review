@@ -1,8 +1,5 @@
 # Principle: every fact has exactly one home
 
-**Independently converged on by two separate projects** with nearly identical phrasing —
-treat that convergence as a signal the rule is real, not a house-style quirk.
-
 ## The test
 
 > **Could this value have been read instead of computed?**

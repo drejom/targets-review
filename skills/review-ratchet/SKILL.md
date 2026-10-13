@@ -98,19 +98,15 @@ same ratchet logic to it directly, in the same turn the drift is noticed:
 The goal is that any future session reading the project's own skill gets an accurate
 picture without needing the full conversation history. When in doubt, write it down.
 
-## Reference implementations
+## Two structural variants worth adopting
 
-Two projects independently converged on this pattern before it was written down here —
-worth reading as worked examples, each with a structural variant worth borrowing:
-
-| Project | File(s) | Notable variant |
-|---|---|---|
-| haemProcessR | `.claude/agents/docs/review-standards.md`, first formalized in its own ADR-0016 | A **mechanical gate** (`check-repo-hygiene.sh`) enforces the 150-line cap itself, rather than leaving the count to memory — see `adr-practice/SKILL.md` for the excerpt and why. |
-| A second R/{targets} project | `REVIEW_RATCHET.md` | States the duties as **four** (Add/Correct/Deduplicate/**Graduate**) rather than three, with Graduate broken out as its own numbered duty rather than folded into "rules that keep it from rotting." Worth adopting if your project graduates rules often enough that it deserves top billing. |
-
-Both arrived at nearly identical wording for "a wrong standard is worse than none" and "a
-reviewer is not an oracle" independently — treat convergent, independently-derived wording
-as a signal the rule is real, not an artifact of one project's house style.
+- **Gate the cap itself, don't rely on memory.** A script that counts the defect checklist's
+  line count and fails if it's over the cap (see `adr-practice/SKILL.md` for the shape) is
+  more reliable than a human remembering to check — the one rule whose whole purpose is to
+  force graduation is exactly the rule most likely to get skipped if left to memory.
+- **Consider naming Graduate as its own numbered duty**, rather than folding it into "rules
+  that keep it from rotting," if a project graduates rules often enough that it deserves top
+  billing alongside Add/Correct/Deduplicate.
 
 ## Related skills in this plugin
 
