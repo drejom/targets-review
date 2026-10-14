@@ -18,7 +18,9 @@ renders, per book. Flag chunks referencing missing files and files no chunk uses
 `RENDERED_BOOK`, confirm each image actually renders. (`MISSING`)
 
 **2. Accessibility.** Hue-only encodings that fail common colour-vision deficiencies; low
-contrast; text below roughly 7 pt in print or 11 px on the web at final size. (`A11Y`)
+contrast; text below roughly 7 pt in print or 11 px on the web at final size. Judge size as
+rendered in the report, not in the image file: a wide PNG scaled into a text column can lose
+half its text size. (`A11Y`)
 
 **3. Labels.**
 - Axes labelled with units.
@@ -35,7 +37,9 @@ be drawn. (`PLACE`)
 
 **5. Consistency across figures.** The same colour means the same thing everywhere; the
 same theme, fonts and marker conventions apply for the same data type; and a group's colour
-comes from the project's single palette definition, not an ad hoc one. (`STYLE`)
+comes from the project's single palette definition, not an ad hoc one. When points are
+placed on a fitted curve in one figure and in a rug beneath it in another, ask for one
+convention. (`STYLE`)
 
 **6. Layout.** Fixed aspect for embeddings; balanced panel sizes; overplotting handled with
 transparency, rasterisation or density; no cramped or wasted space. (`LAYOUT`)
@@ -50,6 +54,24 @@ Paired before/after comparisons are not redundant. (`REDUNDANT`)
 - Rendered as a formatted table, not a code block.
 - Very long raw tables better offered as a download. (`TABLE`)
 
+**9. One meaning per mark.** Every visual channel (hue, shade, shape, outline,
+ring, size) carries exactly one meaning across the whole report, and an
+annotation mark (a ring, an outline, a star) marks one condition only. A plot
+of relabelled records should draw the label the analysis uses and mark only
+where it differs from the source record; mixing the two makes the reader guess
+which label a point shows. Incident: a ring meant "SNP family differs from the
+recorded clutch" in one figure and "label inferred" in another until it was
+pinned to one rule. (`ENCODE`)
+
+**10. Positions that are not data.** Vertical jitter on a one-dimensional
+strip, or points stacked under a density curve, invent a coordinate. When
+points sit on a curve (a density or potential landscape), their height is the
+curve, not a measurement: they must actually touch the curve they claim to sit
+on (check slopes and rescaled panels, where a vertical offset floats or sinks),
+and the caption must say what height means. Incident: embryos drawn in a row
+beneath each day's landscape read as a second variable; on steep walls,
+vertically offset points floated off the curve. (`POSITION`)
+
 Severity follows `00_common.md`. As a guide:
 - **H**: unreadable, or colour-unsafe on a primary figure; a label on the wrong group.
 - **M**: missing labels, or inconsistent colour meaning.
@@ -57,7 +79,8 @@ Severity follows `00_common.md`. As a guide:
 
 ## Codes
 
-`MISSING` · `A11Y` · `LABEL` · `PLACE` · `STYLE` · `LAYOUT` · `REDUNDANT` · `TABLE`
+`MISSING` · `A11Y` · `LABEL` · `PLACE` · `STYLE` · `LAYOUT` · `REDUNDANT` · `TABLE` ·
+`ENCODE` · `POSITION`
 
 ## Extra section
 
