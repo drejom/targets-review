@@ -71,6 +71,9 @@ recomputed. Flag:
 - code that repairs a source table (the table is what is wrong);
 - a source table nothing validates.
 
+Include plot code that recomputes a value the values object or a table already holds, such
+as counts annotated on a figure that the prose also quotes: the two can drift apart.
+
 Give quantitative disagreement where you can. For this item, agreement is not correctness:
 a re-derivation that currently matches is still a defect, because nothing keeps it matching.
 (`RD`)

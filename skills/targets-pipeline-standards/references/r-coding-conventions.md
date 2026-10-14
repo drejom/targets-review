@@ -99,6 +99,28 @@ lookup tables), treat them as read-only inputs that everything else derives from
 modify them in-pipeline, and never re-derive a value they already hold — see
 `adr-practice/templates/principle-ssot.md`.
 
+**Derive groupings from the canonical design table, never from a hand-typed mapping.** A
+plot or summary that re-types which groups belong to which condition silently drops or
+misassigns rows when the typed list and the table disagree. Join to the design table and
+stop on any unmatched row. Incident: a figure's hand-typed group list omitted one control
+group; three embryos vanished from the figure with no error.
+
+**Apply corrections once, to every copy.** When a sample is relabelled or excluded in
+configuration, every dataset that contains that sample — including secondary copies built
+for another analysis — must take the correction from the same configured list, and a check
+must stop the build if any copy disagrees. Incident: a genotype relabel lived in one
+profile's config while a second copy of the same dataset, read straight from the registry,
+kept the old label.
+
+### Two silent R pitfalls
+
+- **Data masking.** Inside `dplyr` verbs a column shadows an environment variable of the
+  same name: with a column `p`, `filter(.data$fdr < p$cutoff)` reads the column. Use
+  `.env$p` (or `!!`) for environment values whenever a column could share the name.
+- **Names travel.** Named numeric vectors (e.g. scores named by sample ID) carry their names
+  into `unlist()`ed values objects and exported tables. `unname()` before a value leaves
+  the pipeline, or identifiers leak into reports.
+
 ### DRY enforcement — canonical helpers
 
 Before writing inline logic that looks like it might recur, check whether a shared helper

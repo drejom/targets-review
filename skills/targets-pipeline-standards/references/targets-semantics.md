@@ -130,3 +130,9 @@ has this shape; it's an easy, silent gap.
   read at the orchestration layer, not inside a running target.
 - Whether `tar_option_set(imports = ...)` is set if pipeline logic lives in a package rather
   than sourced files (§6) — if not, package-function edits silently fail to invalidate.
+- **One store shared by several configuration profiles.** If a pipeline switches behaviour
+  on an environment variable or config profile but keeps one `_targets/` store, a target
+  holds whichever profile built it last. `tar_read()` then silently returns another
+  profile's result. Either give each profile its own store (`tar_config_set(store = ...)`
+  per profile) or re-make the intended profile immediately before reading, and say which
+  in the project's run instructions.

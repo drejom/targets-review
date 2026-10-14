@@ -18,7 +18,9 @@ renders, per book. Flag chunks referencing missing files and files no chunk uses
 `RENDERED_BOOK`, confirm each image actually renders. (`MISSING`)
 
 **2. Accessibility.** Hue-only encodings that fail common colour-vision deficiencies; low
-contrast; text below roughly 7 pt in print or 11 px on the web at final size. (`A11Y`)
+contrast; text below roughly 7 pt in print or 11 px on the web at final size. Judge size as
+rendered in the report, not in the image file: a wide PNG scaled into a text column can lose
+half its text size. (`A11Y`)
 
 **3. Labels.**
 - Axes labelled with units.
@@ -35,7 +37,11 @@ be drawn. (`PLACE`)
 
 **5. Consistency across figures.** The same colour means the same thing everywhere; the
 same theme, fonts and marker conventions apply for the same data type; and a group's colour
-comes from the project's single palette definition, not an ad hoc one. (`STYLE`)
+comes from the project's single palette definition, not an ad hoc one. Each visual channel
+(hue, shade, shape, outline, ring) carries one meaning across the whole report; a shape
+that means genotype in one figure and phenotype in the next is a finding. When points are
+placed on a fitted curve in one figure and in a rug beneath it in another, ask for one
+convention. (`STYLE`)
 
 **6. Layout.** Fixed aspect for embeddings; balanced panel sizes; overplotting handled with
 transparency, rasterisation or density; no cramped or wasted space. (`LAYOUT`)

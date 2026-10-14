@@ -11,7 +11,6 @@ Every chapter/document has a single `setup` chunk with `#| include: false`:
 ```r
 #| label: setup
 #| include: false
-library(dplyr)            # library() is fine in a .qmd setup chunk — unlike R/*.R
 targets::tar_load(c(plot_a, plot_b))
 values <- targets::tar_read(reported_values)   # the project's single values-object target
 source("../R/constants.R")   # only if the chapter needs shared palettes/levels
@@ -19,6 +18,8 @@ source("../R/utils.R")       # only if the chapter needs shared helpers
 ```
 
 Rules:
+- Use `pkg::fn()` in chunks as in `R/` (no `library()` calls); this keeps §6's namespace rule
+  true for reports too.
 - `tar_load()` for plots and larger objects; `tar_read()` for the values object and scalars.
 - Do **not** source the same file twice in one chapter's setup chunk.
 - Suppress warnings/messages at the YAML level for appendix/validation-only chapters;
@@ -42,6 +43,28 @@ statically scan a document's source for `tar_read`/`tar_load` calls to infer the
 dependencies; a dynamic/string-based read is invisible to that scan, so the report can
 silently render stale numbers without any error when upstream data changes — see
 `references/targets-semantics.md` §1 and §3 for why this defeats static analysis.
+
+### Guard the words, not just the numbers
+
+A value read from the values object can stay correct while the sentence around it goes
+stale: "the interval excludes zero", "only in hot-start groups", "two of each". Put a
+`stopifnot()` for each such claim in an `include: false` chunk beside the prose, reading the
+same values-object fields, so a rerun that changes the data stops the render instead of
+publishing a false sentence.
+
+Display helpers may reformat a value (rounding, thousands separators, a typographic minus,
+number words); they must not compute one. Arithmetic in an inline expression — a percentage,
+a difference, a ratio — belongs in the values-object builder as its own field.
+
+A test that scans `.qmd` prose (outside code and inline expressions) for bare numerals
+catches hand-typed values cheaply. Allow-list the few legitimate literals: scale anchors
+("0 = testis"), notation (log~2~), identifiers and years.
+
+### Chapter titles
+
+Do not put inline R in a chapter title: Quarto builds the sidebar and page titles before
+the chapter executes, so navigation shows a blank where the value should be. Keep the title
+literal and guard the literal with a `stopifnot()` in a setup chunk placed above the title.
 
 ## 3. Palettes and canonical ordering
 
@@ -74,6 +97,15 @@ Every figure chunk needs:
 - Pre-rendered image files: `knitr::include_graphics(path)` with the same chunk options,
   omitting `fig-width`/`fig-height`.
 - Tables use the `tbl-` prefix and `#| tbl-cap:` instead of `fig-cap:`.
+
+### Rendered size
+
+A figure saved at 9 in and 200 dpi is 1,800 px wide; in a 750 px text column the browser
+scales it to about 40%, and 9 pt axis text renders near 8 px. Check figures at their
+rendered size, not in the PNG viewer: measure the rendered width (a headless browser
+reading `getBoundingClientRect()` works) and aim for text of at least 11 px. Widen
+multi-panel figures with `column: page` or `column: body-outset` rather than shrinking text.
+Hidden tab panels report a width of zero; activate them before measuring.
 
 ## 5. Heavy objects are forbidden in `.qmd` files
 
