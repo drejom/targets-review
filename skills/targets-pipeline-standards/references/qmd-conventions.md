@@ -45,6 +45,20 @@ dependencies; a dynamic/string-based read is invisible to that scan, so the repo
 silently render stale numbers without any error when upstream data changes — see
 `references/targets-semantics.md` §1 and §3 for why this defeats static analysis.
 
+### Guard the words, not just the numbers
+
+A value read from the values object can stay correct while the sentence around it goes
+stale: "the interval excludes zero", "only in hot-start groups", "two of each". Put a
+`stopifnot()` for each such claim in an `include: false` chunk beside the prose, reading the
+same values-object fields, so a rerun that changes the data stops the render instead of
+publishing a false sentence.
+
+Display helpers may reformat a value (rounding, thousands separators, a typographic minus,
+number words); they must not compute one. Arithmetic in an inline expression — a percentage,
+a difference, a ratio — belongs in the values-object builder as its own field.
+
+Bare numerals typed into prose and chapter titles are caught mechanically; see §6.
+
 ## 3. Palettes and canonical ordering
 
 If the project has a canonical ordering or palette for a categorical vocabulary (cell types,
@@ -76,6 +90,15 @@ Every figure chunk needs:
 - Pre-rendered image files: `knitr::include_graphics(path)` with the same chunk options,
   omitting `fig-width`/`fig-height`.
 - Tables use the `tbl-` prefix and `#| tbl-cap:` instead of `fig-cap:`.
+
+### Rendered size
+
+A figure saved at 9 in and 200 dpi is 1,800 px wide; in a 750 px text column the browser
+scales it to about 40%, and 9 pt axis text renders near 8 px. Check figures at their
+rendered size, not in the PNG viewer: measure the rendered width (a headless browser
+reading `getBoundingClientRect()` works) and aim for text of at least 11 px. Widen
+multi-panel figures with `column: page` or `column: body-outset` rather than shrinking text.
+Hidden tab panels report a width of zero; activate them before measuring.
 
 ## 5. Heavy objects are forbidden in `.qmd` files
 

@@ -103,13 +103,32 @@ units. (`SENS`)
   positive result.
 - State n per arm before any power claim. (`TEST`, `NULL`)
 
-**9. Multiple testing.** Does the correction match the number of tests actually run? Are
+**9. One model per sentence.** An estimate and an interval quoted together must come from
+the same model and the same sample. Pairing a covariate-adjusted estimate with the interval
+of a sensitivity model (different n) reads as one result and is not. When a conclusion
+depends on the model, quote each model's estimate with its own interval. (`MIX`)
+
+**10. Composition-dependent summaries.** A density, landscape, mode count or barrier fitted
+to a pooled population depends on how many units of each kind were sampled. Pooling groups
+with different expected outcomes (e.g. genotypes, or exposures that fix the outcome)
+manufactures modes and barriers whose depth is a sampling choice. Ask for the like-for-like
+stratum before such a summary is read as a property of the process. Also check whether one
+observation creates the pattern: a split, a well or a gene cluster that disappears when one
+sample is dropped is that sample, not biology. Incident: a late "double well" in a time
+course was one mislabelled embryo, and the largest "diverging" gene cluster came from one
+outlying pool. (`COMP`)
+
+**11. Effective test universe.** Enrichment tools silently drop features without
+annotation (e.g. genes without GO terms) from both the test set and the background. Report
+the counts actually tested, not the counts submitted. (`UNIV`)
+
+**12. Multiple testing.** Does the correction match the number of tests actually run? Are
 exploratory analyses distinguished from confirmatory ones? (`MULT`)
 
-**10. Descriptive vs inferential framing.** Inferential language on a descriptive analysis,
+**13. Descriptive vs inferential framing.** Inferential language on a descriptive analysis,
 such as "significantly higher" with no test, or "enriched" with no test. (`DESC`)
 
-**11. Composite scores and their leakage checks.** A score or axis built from
+**14. Composite scores and their leakage checks.** A score or axis built from
 features is only as clean as its features. Check whether any feature responds
 to a factor the score is then used to compare across; if so, the score moves
 groups for the wrong reason. Incident: a 28 °C sex axis included
@@ -119,17 +138,6 @@ ovaries (0.96). Then check the leakage test itself: one run on samples that
 were used to select the features is circular. Ask for an independent sample.
 (`AXIS`)
 
-**12. Statistics that measure sampling.** Density-based statistics (well
-depth, barrier height, cluster separation, bimodality) on a pooled population
-depend on how many of each group were sampled. Pooling a group whose outcome
-is fixed (a genotype that always takes one fate) guarantees a mode. Compare
-like with like, and treat pooled-fit statistics as description. Also check
-whether one observation creates the pattern: a split, a well or a gene cluster
-that disappears when one sample is dropped is that sample, not biology.
-Incident: a late "double well" in a time course was one mislabelled embryo,
-and the largest "diverging" gene cluster came from one outlying pool.
-(`COMP`)
-
 For every finding, give the concrete check you ran, or would run. A normalisation finding
 should name:
 - the subsetting line;
@@ -138,8 +146,8 @@ should name:
 
 ## Codes
 
-`UNIT` · `NORM` · `SCORE` · `MODEL` · `CONF` · `CORR` · `SENS` · `TEST` · `NULL` · `MULT` ·
-`DESC` · `AXIS` · `COMP`
+`UNIT` · `NORM` · `SCORE` · `MODEL` · `CONF` · `CORR` · `SENS` · `TEST` · `NULL` · `MIX` ·
+`COMP` · `UNIV` · `MULT` · `DESC` · `AXIS`
 
 ## Extra sections
 
