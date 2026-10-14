@@ -11,7 +11,6 @@ Every chapter/document has a single `setup` chunk with `#| include: false`:
 ```r
 #| label: setup
 #| include: false
-library(dplyr)            # library() is fine in a .qmd setup chunk — unlike R/*.R
 targets::tar_load(c(plot_a, plot_b))
 values <- targets::tar_read(reported_values)   # the project's single values-object target
 source("../R/constants.R")   # only if the chapter needs shared palettes/levels
@@ -19,6 +18,9 @@ source("../R/utils.R")       # only if the chapter needs shared helpers
 ```
 
 Rules:
+- No `library()` calls: use `pkg::fn()` in chunks too, as in
+  `r-coding-conventions.md` §1. A chapter that attaches packages hides which
+  functions it really uses.
 - `tar_load()` for plots and larger objects; `tar_read()` for the values object and scalars.
 - Do **not** source the same file twice in one chapter's setup chunk.
 - Suppress warnings/messages at the YAML level for appendix/validation-only chapters;
@@ -82,7 +84,52 @@ directly in a report document. All plots and tables needing heavy objects are pr
 pipeline targets; the `.qmd` only calls `tar_load()`/`tar_read()` on the already-built
 result.
 
-## 6. What NOT to do
+## 6. Guard the prose mechanically
+
+Convention alone does not keep typed numbers out; a test does. Add one that
+strips code chunks, YAML and inline `` `r ...` `` values from every `.qmd`, then
+fails on any remaining digit outside an explicit allowlist (scale definitions
+such as "0, typical testis", identifiers such as clutch or batch codes, figure
+and appendix numbers, `log~2~`).
+
+```r
+prose_numbers <- function(path) {
+    text <- paste(readLines(path, warn = FALSE), collapse = "\n")
+    text <- gsub("(?s)```.*?```", "", text, perl = TRUE)
+    text <- gsub("`r [^`]*`", "", text)
+    # ... strip links, citations and allowlisted patterns, then:
+    regmatches(text, gregexpr("(?<![A-Za-z0-9.])[0-9]+(\\.[0-9]+)?", text, perl = TRUE))[[1]]
+}
+```
+
+Give the guard its own fixture test (a literal is caught, an inline value is
+not), or it can pass vacuously. Incident: a report audited as clean still had a
+typed "95%" interval, a typed "36 °C" in Methods and a percentage computed
+inside a chapter; the guard found all three.
+
+Three places the guard cannot reach need their own check:
+
+- **Headings.** Inline `r` in a chapter title renders blank in Quarto's sidebar
+  and TOC. Keep the title literal and assert it in the setup chunk, e.g.
+  `stopifnot(values$design$window_end == 9)`, so a design change stops the
+  build instead of leaving a false title.
+- **Labels typed into figure code** ("28 °C", stage vectors, reference-line
+  text). Check them against the values object in one function called when the
+  figures are built.
+- **Plot annotations that restate a reported number** (n labels, group means,
+  ratio labels). Read them from the values object, or assert they equal it; a
+  second computation of the same count agrees today and drifts later.
+
+## 7. Mirrors are not sources
+
+A copy of the report published elsewhere (an HTML page, slides, an email
+summary) is outside the guard. Generate it from the exported values, or
+reconcile every number in it against a dump of the values object before it is
+shared. Incident: a hand-built web mirror of a book was reconciled number by
+number against `reported_values` before release; nothing else would have
+caught a stale value there.
+
+## 8. What NOT to do
 
 | Forbidden | Use instead |
 |-----------|-------------|
@@ -94,8 +141,10 @@ result.
 | `source()`-ing the same file twice in one chapter | Once per setup chunk only |
 | Inline recomputation of a values-object field | Add the field to the values-object builder |
 | `tar_read_raw()` with a variable target name | `tar_read(literal_name)` only |
+| `library()` in a setup chunk | `pkg::fn()` in every chunk |
+| Inline `r` in a heading | A literal heading guarded by `stopifnot()` |
 
-## 7. Report independence
+## 9. Report independence
 
 The report should be renderable independently from the pipeline's exported artifacts,
 without requiring a fresh analysis run — see `references/report-traceability.md`.

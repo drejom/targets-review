@@ -46,6 +46,22 @@ format's full semantics). Because file targets **don't preserve list/vector name
 reading, rather than relying on name-preservation you haven't actually verified for your
 `{targets}` version.
 
+## Display fits are not evidence
+
+A model fitted only to draw a figure (a pooled reference curve, a smoother, a
+landscape across every group) gets its own target, is labelled as a display
+fit in its caption, and its statistics stay out of the values object and the
+prose. Statistics of a pooled fit often measure sampling composition, not the
+effect: incident, a density landscape pooled across genotypes had a deep
+"ovary" well guaranteed by the genotype that always makes ovaries, and its
+barrier heights tracked how many of each group were sequenced.
+
+## Names on exported vectors
+
+`unname()` numeric vectors before they enter the values object or an export.
+Names carried from a per-sample table can put sample identifiers into a
+report or a shared bundle without anyone typing them.
+
 ## Related
 
 - `qmd-conventions.md` — the full report-authoring convention this rule feeds into.

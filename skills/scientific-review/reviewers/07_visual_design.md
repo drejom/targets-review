@@ -50,6 +50,29 @@ Paired before/after comparisons are not redundant. (`REDUNDANT`)
 - Rendered as a formatted table, not a code block.
 - Very long raw tables better offered as a download. (`TABLE`)
 
+**9. One meaning per mark.** Every visual channel (hue, shade, shape, outline,
+ring, size) carries exactly one meaning across the whole report, and an
+annotation mark (a ring, an outline, a star) marks one condition only. A plot
+of relabelled records should draw the label the analysis uses and mark only
+where it differs from the source record; mixing the two makes the reader guess
+which label a point shows. Incident: a ring meant "SNP family differs from the
+recorded clutch" in one figure and "label inferred" in another until it was
+pinned to one rule. (`ENCODE`)
+
+**10. Positions that are not data.** Vertical jitter on a one-dimensional
+strip, or points stacked under a density curve, invent a coordinate. When
+points sit on a curve (a density or potential landscape), their height is the
+curve, not a measurement: they must actually touch the curve they claim to sit
+on (check slopes and rescaled panels, where a vertical offset floats or sinks),
+and the caption must say what height means. Incident: embryos drawn in a row
+beneath each day's landscape read as a second variable; on steep walls,
+vertically offset points floated off the curve. (`POSITION`)
+
+**11. Rendered size.** Judge legibility in the rendered book at its column
+width, not in the source image. A figure placed in a narrow body column
+shrinks every label; widen the column (`column: body-outset` or `page`) or
+redraw. (`SIZE`)
+
 Severity follows `00_common.md`. As a guide:
 - **H**: unreadable, or colour-unsafe on a primary figure; a label on the wrong group.
 - **M**: missing labels, or inconsistent colour meaning.
@@ -57,7 +80,8 @@ Severity follows `00_common.md`. As a guide:
 
 ## Codes
 
-`MISSING` · `A11Y` · `LABEL` · `PLACE` · `STYLE` · `LAYOUT` · `REDUNDANT` · `TABLE`
+`MISSING` · `A11Y` · `LABEL` · `PLACE` · `STYLE` · `LAYOUT` · `REDUNDANT` · `TABLE` ·
+`ENCODE` · `POSITION` · `SIZE`
 
 ## Extra section
 

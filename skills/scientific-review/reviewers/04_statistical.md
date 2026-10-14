@@ -109,6 +109,27 @@ exploratory analyses distinguished from confirmatory ones? (`MULT`)
 **10. Descriptive vs inferential framing.** Inferential language on a descriptive analysis,
 such as "significantly higher" with no test, or "enriched" with no test. (`DESC`)
 
+**11. Composite scores and their leakage checks.** A score or axis built from
+features is only as clean as its features. Check whether any feature responds
+to a factor the score is then used to compare across; if so, the score moves
+groups for the wrong reason. Incident: a 28 °C sex axis included
+heat-responsive sex markers, so heated embryos sat "part-way" (0.55) between
+sexes; on an axis built from heat-insensitive genes the same embryos were full
+ovaries (0.96). Then check the leakage test itself: one run on samples that
+were used to select the features is circular. Ask for an independent sample.
+(`AXIS`)
+
+**12. Statistics that measure sampling.** Density-based statistics (well
+depth, barrier height, cluster separation, bimodality) on a pooled population
+depend on how many of each group were sampled. Pooling a group whose outcome
+is fixed (a genotype that always takes one fate) guarantees a mode. Compare
+like with like, and treat pooled-fit statistics as description. Also check
+whether one observation creates the pattern: a split, a well or a gene cluster
+that disappears when one sample is dropped is that sample, not biology.
+Incident: a late "double well" in a time course was one mislabelled embryo,
+and the largest "diverging" gene cluster came from one outlying pool.
+(`COMP`)
+
 For every finding, give the concrete check you ran, or would run. A normalisation finding
 should name:
 - the subsetting line;
@@ -118,7 +139,7 @@ should name:
 ## Codes
 
 `UNIT` · `NORM` · `SCORE` · `MODEL` · `CONF` · `CORR` · `SENS` · `TEST` · `NULL` · `MULT` ·
-`DESC`
+`DESC` · `AXIS` · `COMP`
 
 ## Extra sections
 
