@@ -34,7 +34,12 @@ author had? Prose written during an analysis answers the author's questions in t
 order. Grep for `still`, `now`, `no longer`, `previously`, `actually`, `in fact`,
 `rather than`, `turns out`. Each implies a comparison to a state the reader never saw.
 Also flag references to superseded versions ("an earlier version of this chapter…") in a
-chapter rather than a changelog. (`RESIDUE`)
+chapter rather than a changelog.
+
+Residue is also emphasis: a covariate, caveat or check narrated across chapters because it
+once looked important. Ask whether today's results still earn the space. Incident: a
+technical covariate with no detectable effect was discussed in four chapters, left over
+from an early apparent effect that a corrected analysis removed. (`RESIDUE`)
 
 **4. Hedging and emphasis.** A caveat repeated in several places reads as evasion.
 Intensifiers ("honest", "genuine", "at all", "not merely", "clearly") stand in for evidence.

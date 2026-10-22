@@ -64,10 +64,23 @@ assertions with no citation, in proportion to how specific the claim is. (`LIT`,
 theirs, and as unverified if it is. A hypothesis must be attributed to the person who made
 it, and data to the lab that produced it. (`ATTR`)
 
+**8. Known results framed as findings.** A result that reproduces established literature
+(a classic association, a well-known marker) is a positive control: it shows the data
+behave, and that is how it should be framed. Flag it when it is led as new or carries a
+headline. Incident: a classic disease-locus association was led as "what the first cohort
+could not show" until a cold read placed it in the literature. (`KNOWN`)
+
+**9. Results of different strength side by side.** A strong measurement result (an assay
+agreeing with a known marker) beside weak or underpowered association results lets the
+reader carry one's confidence to the other. Flag summaries that juxtapose them without
+saying they answer different questions with different evidence. Incident: genotype
+concordance and null abundance associations read to collaborators as one claim. (`STRENGTH`)
+
 ## Codes
 
 `STR` strength mismatch · `CAUSE` causal language · `GEN` over-generalisation from sample ·
-`CAV` missing caveat · `BIAS` hypothesis bias · `LIT` literature · `CITE` uncited claim ·
+`CAV` missing caveat · `KNOWN` known result framed as new · `STRENGTH` mixed-strength
+results juxtaposed · `BIAS` hypothesis bias · `LIT` literature · `CITE` uncited claim ·
 `ATTR` attribution.
 
 ## Extra section

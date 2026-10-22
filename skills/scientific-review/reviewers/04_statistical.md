@@ -42,7 +42,13 @@ For each analysis in the inventory, check:
 donors, or libraries counted as donors, inflate significance. Check:
 - every `n_distinct()`/`unique()` feeding an n;
 - every minimum-n guard (a guard satisfied by technical replicates is worse than none);
-- every random-effect grouping column. (`UNIT`)
+- every random-effect grouping column.
+
+An n printed beside a rate must name its unit, and the reader must be able to recover the
+rate's numerator and denominator. Pooled counts with Poisson or binomial intervals across
+many donors are pseudoreplication even when the arithmetic is right. Incident: a cell-type
+figure printed "n = 10,016" (UMIs) beside a per-1,000-cells rate, with Poisson intervals over
+78 pooled donors. (`UNIT`)
 
 **2. Normalisation and scaling scope.** Is each normalisation computed over the right set?
 The classic silent failure is subsetting features, or cells, before computing library size
@@ -101,10 +107,18 @@ units. (`SENS`)
 - Every inferential result carries an effect size and uncertainty.
 - Null results are not read as equivalence. A null deserves at least as much hedging as a
   positive result.
-- State n per arm before any power claim. (`TEST`, `NULL`)
+- State n per arm before any power claim.
+- The test behind a claim tests that claim. An omnibus test across several groups does not
+  support a statement about two of them, least of all when another group runs the other
+  way. Incident: a four-group p of 0.0015 was cited for "rarer in T1D"; the two-group test
+  gave 0.016 and did not survive correction.
+- Two measures of the same data (markers in complete linkage, a duplicated assay) are one
+  result, not a replication. Identical p-values are the tell. (`TEST`, `NULL`)
 
 **9. Multiple testing.** Does the correction match the number of tests actually run? Are
-exploratory analyses distinguished from confirmatory ones? (`MULT`)
+exploratory analyses distinguished from confirmatory ones? The family is fixed before the
+results are seen: shrinking it afterwards (dropping a test, merging two) to bring a p under
+the threshold is post hoc. (`MULT`)
 
 **10. Descriptive vs inferential framing.** Inferential language on a descriptive analysis,
 such as "significantly higher" with no test, or "enriched" with no test. (`DESC`)
