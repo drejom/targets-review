@@ -1,6 +1,7 @@
 # Reviewer common contract — read this before your role file
 
-Every reviewer (R1–R10) reads this file first. It holds everything the roles share, so the
+Every reviewer (R1–R10, and R11, the final editorial read after remediation) reads this file
+first. It holds everything the roles share, so the
 role files state only what is different about each role. If your role file and this file
 disagree, this file wins, and say so in your report.
 

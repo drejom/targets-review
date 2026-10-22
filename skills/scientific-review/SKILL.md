@@ -224,8 +224,16 @@ wait.**
    Rerun the project's gates. Rebuild or re-render what changed, and re-read the changed
    rendered pages. For any gate added or changed, inject the defect, confirm it fails,
    revert, and confirm it passes.
-5. Write `{REVIEW_OUT_DIR}/remediation_summary.md` (applied, deferred, manual items, next
-   steps) and present it.
+5. **Final editorial read (R11).** Once every remediator's output is verified and the book
+   re-rendered, dispatch one reviewer with `reviewers/00_common.md` and
+   `reviewers/11_editor.md` on the whole rendered book, using the strongest available
+   model. It catches what parallel lanes cannot: fixes that interact, leads that no longer
+   match corrected bodies, and headlines a cold reader would misread. Verify each finding
+   against the source exactly as in REVIEW Step 5 (its rewrites can overclaim too), route
+   accepted ones to the matching remediator, and re-run the gates. Incident: the lanes had
+   passed a chapter whose lead tied an omnibus p to a two-group claim; a cold read caught it.
+6. Write `{REVIEW_OUT_DIR}/remediation_summary.md` (applied, deferred, manual items, the
+   editor's findings and what was done with each, next steps) and present it.
 
 ---
 
