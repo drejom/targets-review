@@ -33,7 +33,12 @@ filter in code. Tells:
   held-out cells or donors;
 - a table or figure labelled with one cohort that silently includes another;
 - a "total" paired with a count from a different unit (e.g. cells from all cohorts beside
-  donors from one).
+  donors from one);
+- a stratified breakdown (by ancestry, group, batch) whose rows do not sum to the headline n
+  it explains, usually because rows with a missing stratum label were filtered out. Sum the
+  rows. Incident: an agreement table by ancestry summed to 72 of 75 donors; the 3 with no
+  ancestry record were dropped, so the named rows gave 81% against a headline 79%. Missing
+  labels belong in their own row.
 
 Report the populations with counts: "X counts 42 donors; the denominator is 33; the 9
 extra are the validation cohort" (`POP`).
