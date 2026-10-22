@@ -130,3 +130,31 @@ dplyr::filter(df, n > 0)   # filter rows where n is greater than zero
 ```
 
 Never write multi-line comment blocks or docstrings in pipeline source. One short line max.
+
+## 7. Randomness — seed each stochastic call, locally
+
+Any value a report prints that comes from a random process (Monte Carlo p-values,
+permutation tests, bootstraps, subsampling, jitter) must be identical on every run. Seed
+**each call** with `withr::with_seed()`, inside the function that draws, from a seed held
+as a constant. Do not rely on one `set.seed()` at the top of a target.
+
+```r
+# GOOD: depends only on the table; session RNG untouched
+fisher_mc_p <- function(tb) {
+    withr::with_seed(monte_carlo_seed, stats::fisher.test(tb, simulate.p.value = TRUE, B = 1e5)$p.value)
+}
+
+# BAD: the p for test k depends on how many draws tests 1..k-1 consumed
+set.seed(1)
+p <- lapply(tables, function(tb) stats::fisher.test(tb, simulate.p.value = TRUE)$p.value)
+```
+
+A top-of-target `set.seed()` makes every result depend on call order: adding, removing or
+reordering one test silently changes the others, and functions called from another
+target get no seed at all. Incident: a reported p moved from 0.0016 to 0.0014 between
+renders because a second target reused the test function unseeded.
+
+Verify with a test that calls the function twice with other random draws in between and
+expects identical results, and that `.Random.seed` is unchanged by the call. In the
+pipeline, `targets::tar_invalidate()` the stochastic target and re-run: every reported
+value must come back identical.
